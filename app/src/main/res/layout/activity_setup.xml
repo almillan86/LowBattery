@@ -119,7 +119,7 @@
         android:layout_width="50dp"
         android:layout_height="wrap_content"
         android:inputType="number"
-        android:text="35"
+        android:text="30"
         android:textAlignment="center"
         android:layout_marginLeft="120dp"
         app:layout_constraintBottom_toBottomOf="@+id/frequencyAlertsLabel"
@@ -154,7 +154,7 @@
         android:layout_width="50dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="120dp"
-        android:checked="true"
+        android:checked="false"
         app:layout_constraintBottom_toBottomOf="@+id/revivePlayersLabel"
         app:layout_constraintStart_toEndOf="@+id/revivePlayersLabel"
         app:layout_constraintTop_toTopOf="@+id/revivePlayersLabel" />
