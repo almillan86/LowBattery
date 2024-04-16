@@ -1,5 +1,6 @@
 package com.example.cryoapp
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.media.MediaPlayer
 import android.os.Build
@@ -7,6 +8,7 @@ import android.os.Bundle
 import android.os.VibrationEffect
 import android.os.Vibrator
 import android.os.VibratorManager
+import android.view.MotionEvent
 import android.view.View
 import android.view.WindowManager
 import android.widget.TextView
@@ -15,7 +17,6 @@ import androidx.appcompat.widget.AppCompatButton
 import androidx.constraintlayout.widget.ConstraintLayout
 import java.util.Timer
 import java.util.TimerTask
-
 
 class PlayerCountdown(button: AppCompatButton,
                       initialTime: Int?, increaseTimeOverMaxValue: Boolean?,
@@ -221,6 +222,7 @@ class GameActivity : AppCompatActivity() {
         gameRunning_ = false
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game)
@@ -234,6 +236,7 @@ class GameActivity : AppCompatActivity() {
         numberOfPlayers_ = bundle?.getInt("NUMBER_OF_PLAYERS")?.or(0)
         increaseTimeOverMaxValue_ = bundle?.getBoolean("INCREASE_TIME_OVER_MAX_VALUE")
         allowRevivePlayersValue_ = bundle?.getBoolean("ALLOW_REVIVE_PLAYERS")
+        allowFreeze_ = bundle?.getBoolean("ALLOW_FREEZE")
 
         // Vibrator
         mainVibrator_ = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
@@ -272,6 +275,7 @@ class GameActivity : AppCompatActivity() {
                         timePerPlayer_, increaseTimeOverMaxValue_,
                         R.color.grey, rootItem_, mainVibrator_, clickSound_, ::disableAllPlayers)
 
+
         playersMap_.put("Red", redPlayer_)
         playersMap_.put("Blue", bluePlayer_)
         playersMap_.put("Yellow", yellowPlayer_)
@@ -284,6 +288,32 @@ class GameActivity : AppCompatActivity() {
         // Alert text
         alert_ = Alert(findViewById<TextView>(R.id.textAlert), rootItem_)
         alert_.hideAlert()
+
+        // Button for freeze
+        freezeButton_ = findViewById<AppCompatButton>(R.id.freezeButton);
+        if (allowFreeze_!!)
+        {
+            freezeButton_.setOnTouchListener { _, motionEvent  ->
+                when (motionEvent.action) {
+                    MotionEvent.ACTION_DOWN -> {
+                        //when user touch down
+                        stopTicking_ = true
+                        freezeButton_.setBackgroundResource(R.color.freeze_on)
+                    }
+                    MotionEvent.ACTION_UP -> {
+                        //when user touch release
+                        stopTicking_ = false
+                        freezeButton_.setBackgroundResource(R.color.freeze_off)
+                    }
+                }
+                true
+            }
+        }
+        else
+        {
+            freezeButton_.isEnabled = false
+        }
+
 
         // Button to add extra time
         addTimeButton_ = findViewById<AppCompatButton>(R.id.addTimeButton)
@@ -333,6 +363,8 @@ class GameActivity : AppCompatActivity() {
         // Set TIMER (Tick every second)
         Timer().scheduleAtFixedRate(object : TimerTask() {
             override fun run() {
+
+                if (stopTicking_) return
 
                 if (isGameRunning())
                 {
@@ -495,6 +527,7 @@ class GameActivity : AppCompatActivity() {
     private var numberOfPlayers_: Int? = 0
     private var increaseTimeOverMaxValue_: Boolean? = true
     private var allowRevivePlayersValue_: Boolean? = true
+    private var allowFreeze_: Boolean? = true
 
     private lateinit var vibrationService_: VibratorManager
     private lateinit var mainVibrator_: Vibrator
@@ -511,10 +544,12 @@ class GameActivity : AppCompatActivity() {
 
     private lateinit var alert_: Alert
     private lateinit var addTimeButton_: AppCompatButton
+    private lateinit var freezeButton_: AppCompatButton
 
     private lateinit var collisionSound_: MediaPlayer
     private lateinit var clickSound_: MediaPlayer
 
     private var gameRunning_: Boolean = false
+    private var stopTicking_: Boolean = false
     private var secondsAppRunning_: Int = 0
 }

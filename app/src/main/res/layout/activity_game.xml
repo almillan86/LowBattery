@@ -7,6 +7,14 @@
     android:layout_height="match_parent"
     tools:context=".GameActivity">
 
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/freezeButton"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/freeze_off"
+        />
+
+
     <androidx.constraintlayout.widget.Barrier
         android:id="@+id/barrierVertical"
         android:layout_width="0dp"

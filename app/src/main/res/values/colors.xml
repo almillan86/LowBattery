@@ -16,4 +16,6 @@
     <color name="grey">#bcbcbc</color>
     <color name="brown">#d5934e</color>
     <color name="orange">#FF8000</color>
+    <color name="freeze_on">#33353637</color>
+    <color name="freeze_off">#00FFFFFF</color>
 </resources>

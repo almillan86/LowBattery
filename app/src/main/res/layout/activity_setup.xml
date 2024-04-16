@@ -89,6 +89,18 @@
         app:layout_constraintEnd_toStartOf="@+id/barrierVertical"
         app:layout_constraintTop_toBottomOf="@+id/increaseTimeOverMaxLabel" />
 
+    <TextView
+        android:id="@+id/freezeLabel"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:text="Freeze is allowed:"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_marginTop="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/barrierVertical"
+        app:layout_constraintTop_toBottomOf="@+id/revivePlayersLabel" />
+
 
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/timePerPlayerValue"
@@ -158,6 +170,16 @@
         app:layout_constraintBottom_toBottomOf="@+id/revivePlayersLabel"
         app:layout_constraintStart_toEndOf="@+id/revivePlayersLabel"
         app:layout_constraintTop_toTopOf="@+id/revivePlayersLabel" />
+
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/allowFreezeValue"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="120dp"
+        android:checked="true"
+        app:layout_constraintBottom_toBottomOf="@+id/freezeLabel"
+        app:layout_constraintStart_toEndOf="@+id/freezeLabel"
+        app:layout_constraintTop_toTopOf="@+id/freezeLabel" />
 
 
     <androidx.appcompat.widget.AppCompatButton

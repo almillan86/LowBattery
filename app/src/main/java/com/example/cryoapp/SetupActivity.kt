@@ -23,6 +23,7 @@ class SetupActivity : AppCompatActivity() {
 
         val increaseTimeOverMaxValue = findViewById<SwitchCompat>(R.id.increaseTimeOverMaxValue)
         val allowRevivePlayersValue = findViewById<SwitchCompat>(R.id.allowRevivePlayersValue)
+        val allowFreezeValue = findViewById<SwitchCompat>(R.id.allowFreezeValue)
 
         startButton.setOnClickListener {
 
@@ -47,6 +48,9 @@ class SetupActivity : AppCompatActivity() {
 
             booleanValue = allowRevivePlayersValue.isChecked();
             intent.putExtra("ALLOW_REVIVE_PLAYERS", booleanValue)
+
+            booleanValue = allowFreezeValue.isChecked();
+            intent.putExtra("ALLOW_FREEZE", booleanValue)
 
             //Start Game activy
             startActivity(intent)
